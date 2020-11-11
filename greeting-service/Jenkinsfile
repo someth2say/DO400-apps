@@ -27,8 +27,8 @@ pipeline {
             steps {
                 sh '''
                     oc project rht-jramirez-test-app
-                    oc new-app --name greeting-service https://github.com/RedHatTraining/DO400-apps \
-                        --context-dir greeting-servcie
+                    oc new-app --name greeting-service https://github.com/RedHatTraining/DO400-apps#jenkins-deploy \
+                        --context-dir greeting-service
 
                     oc expose svc/greeting-service
                 '''
