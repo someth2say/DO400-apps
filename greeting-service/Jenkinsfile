@@ -25,17 +25,10 @@ pipeline {
 
         stage('Build image') {
             steps {
-                dir("greeting-service") {
-                    // sh 'podman build -f src/main/docker/Dockerfile.jvm -t greeting-service'
-
-                    script {
-                        image = docker.build("greeting-service", "-f src/main/docker/Dockerfile.jvm")
-
-                        withDockerRegistry([url: "https://quay.io/", credentialsId: "rht_jenkins_quay"]) {
-                            image.push("latest")
-                        }
-                    }
-                }
+                sh '''
+                    oc project rht-jramirez-test-app
+                    oc start-build greeting-service-quay
+                '''
             }
         }
 
