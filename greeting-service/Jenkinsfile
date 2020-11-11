@@ -8,14 +8,18 @@ pipeline {
     stages {
         stage('Check Style') {
             steps {
-                sh 'ls -l'
-                sh './mvnw checkstyle:check'
+                dir("greeting-service") {
+                    sh 'ls -l'
+                    sh './mvnw checkstyle:check'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                sh './mvnw test'
+                dir("greeting-service") {
+                    sh './mvnw test'
+                }
             }
         }
     }
