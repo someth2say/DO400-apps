@@ -23,6 +23,14 @@ pipeline {
             }
         }
 
+        stage('Build image') {
+            steps {
+                dir("greeting-service") {
+                    sh 'podman build -f src/main/docker/Dockerfile.jvm -t greeting-service'
+                }
+            }
+        }
+
         stage('Deploy') {
             steps {
                 sh '''
