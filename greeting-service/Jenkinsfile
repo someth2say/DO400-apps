@@ -1,0 +1,19 @@
+pipeline {
+    agent {
+        node {
+            label 'master'
+        }
+    }
+
+    stage('Check code style') {
+        steps {
+            sh './mvnw checkstyle:check'
+        }
+    }
+
+    stage('Tests') {
+        steps {
+            sh './mvnw test'
+        }
+    }
+}
