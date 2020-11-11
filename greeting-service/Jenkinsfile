@@ -22,6 +22,18 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy') {
+            steps {
+                sh '''
+                    oc project rht-jramirez-test-app
+                    oc new-app --name greeting-service https://github.com/RedHatTraining/DO400-apps \
+                        --context-dir greeting-servcie
+
+                    oc expose svc/greeting-service
+                '''
+            }
+        }
     }
 
 }
