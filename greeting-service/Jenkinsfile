@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Check Style') {
             steps {
-                sh 'ln -s'
+                sh 'ls -l'
                 sh './mvnw checkstyle:check'
             }
         }
