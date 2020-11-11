@@ -5,15 +5,18 @@ pipeline {
         }
     }
 
-    stage('Check code style') {
-        steps {
-            sh './mvnw checkstyle:check'
+    stages {
+        stage('Check Style') {
+            steps {
+                sh './mvnw checkstyle:check'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh './mvnw test'
+            }
         }
     }
 
-    stage('Tests') {
-        steps {
-            sh './mvnw test'
-        }
-    }
 }
