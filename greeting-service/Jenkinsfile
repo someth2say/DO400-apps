@@ -1,4 +1,3 @@
- 
 library identifier: "pipeline-library@1.6",
 retriever: modernSCM(
   [
@@ -24,7 +23,8 @@ pipeline {
             label 'master'
         }
     }
-
+    
+    
     stages {
         // stage('Check Style') {
         //     steps {
