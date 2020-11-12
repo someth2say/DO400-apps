@@ -1,3 +1,23 @@
+ 
+library identifier: "pipeline-library@1.6",
+retriever: modernSCM(
+  [
+    $class: "GitSCMSource",
+    remote: "https://github.com/redhat-cop/pipeline-library.git"
+  ]
+)
+
+
+openshift.withCluster() {
+  env.APP_NAME = "greeting-service"
+  env.ARTIFACT_DIRECTORY = "greeting-service"
+  env.BUILD = openshift.project()
+  env.DEV = "${APP_NAME}-dev"
+  env.STAGE = "${APP_NAME}-stage"
+  env.PROD = "${APP_NAME}-prod"
+  echo "Starting Pipeline for ${APP_NAME}..."
+}
+
 pipeline {
     agent {
         node {
@@ -6,43 +26,46 @@ pipeline {
     }
 
     stages {
-        stage('Check Style') {
-            steps {
-                dir("greeting-service") {
-                    sh 'ls -l'
-                    sh './mvnw checkstyle:check'
-                }
-            }
-        }
+        // stage('Check Style') {
+        //     steps {
+        //         dir("greeting-service") {
+        //             sh 'ls -l'
+        //             sh './mvnw checkstyle:check'
+        //         }
+        //     }
+        // }
 
-        stage('Test') {
-            steps {
-                dir("greeting-service") {
-                    sh './mvnw test'
-                }
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         dir("greeting-service") {
+        //             sh './mvnw test'
+        //         }
+        //     }
+        // }
 
         stage('Build image') {
             steps {
-                sh '''
-                    oc project rht-jramirez-test-app
-                    oc start-build greeting-service-quay
-                '''
+                // sh '''
+                //     oc project rht-jramirez-test-app
+                //     oc start-build greeting-service-quay
+                // '''
+                steps {
+                    binaryBuild(projectName: "${BUILD}", buildConfigName: "${APP_NAME}", buildFromPath: "${ARTIFACT_DIRECTORY}")
+                }
             }
         }
 
-        stage('Deploy') {
-            steps {
-                sh '''
-                    oc project rht-jramirez-test-app
-                    oc new-app --name greeting-service https://github.com/RedHatTraining/DO400-apps#jenkins-deploy \
-                        --context-dir greeting-service
+        // stage('Deploy') {
+        //     steps {
+        //         sh '''
+        //             oc project rht-jramirez-test-app
+        //             oc new-app --name greeting-service https://github.com/RedHatTraining/DO400-apps#jenkins-deploy \
+        //                 --context-dir greeting-service
 
-                    oc expose svc/greeting-service
-                '''
-            }
-        }
+        //             oc expose svc/greeting-service
+        //         '''
+        //     }
+        // }
     }
 
 }
