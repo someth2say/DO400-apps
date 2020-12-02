@@ -58,8 +58,8 @@ RUN curl http://mirror.centos.org/centos-7/7/os/x86_64/RPM-GPG-KEY-CentOS-7 -o /
 # Copy the entrypoint
 ADD contrib/bin/* /usr/local/bin/
 
-# # Run the Jenkins JNLP client
-# ENTRYPOINT ["/usr/bin/go-init", "-main", "/usr/local/bin/run-jnlp-client"]
+# Run the Jenkins JNLP client
+ENTRYPOINT ["/usr/bin/go-init", "-main", "/usr/local/bin/run-jnlp-client"]
 
 
 # Install Node.js & Cypress
