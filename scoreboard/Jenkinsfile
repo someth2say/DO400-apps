@@ -1,0 +1,16 @@
+pipeline {
+    agent {
+      label 'jenkins-agent-npm'
+    }
+
+    stages {
+        stage ('Install Dependencies') {
+            steps {
+              sh """
+                cd scoreboard
+                npm install
+              """
+            }
+        }
+    }
+}

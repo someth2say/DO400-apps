@@ -16,6 +16,7 @@
         "typescript": "~3.7.2"
     },
     "devDependencies": {
+        "concurrently": "^5.3.0",
         "cross-env": "^7.0.2",
         "cypress": "^5.4.0"
     },
@@ -28,7 +29,8 @@
         "cy:open": "cross-env CYPRESS_CRASH_REPORTS=0 cypress open",
         "cy:run": "cross-env CYPRESS_CRASH_REPORTS=0 cypress run",
         "cy:docker": "docker run -it --rm -v $PWD:/e2e -w /e2e cypress/included:5.4.0 --config baseUrl=http://host.docker.internal:3000",
-        "cy:podman": "podman run -it --rm -v $PWD:/e2e -w /e2e cypress/included:5.4.0 --config baseUrl=http://172.17.0.1:3000"
+        "cy:podman": "podman run -it --rm -v $PWD:/e2e -w /e2e cypress/included:5.4.0 --config baseUrl=http://172.17.0.1:3000",
+        "cy:ci": "cross-env CYPRESS_CRASH_REPORTS=0 BROWSER=none concurrently --kill-others --success first \"cypress run\" \"npm start\""
     },
     "eslintConfig": {
         "extends": "react-app"
