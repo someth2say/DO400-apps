@@ -1,6 +1,6 @@
 pipeline {
     agent {
-      label 'jenkins-agent-npm'
+      label 'jenkins-agent-cypress'
     }
 
     stages {
@@ -10,6 +10,30 @@ pipeline {
                 cd scoreboard
                 npm install
               """
+            }
+        }
+        stage ('Build') {
+            steps {
+              sh """
+                cd scoreboard
+                npm run build
+              """
+            }
+        }
+        stage ('Unit Tests') {
+            steps {
+                sh """
+                  cd scoreboard
+                  CI=true npm test
+                """
+            }
+        }
+        stage ('Functional Tests') {
+            steps {
+                sh """
+                  cd scoreboard
+                  npm run cy:ci
+                """
             }
         }
     }
