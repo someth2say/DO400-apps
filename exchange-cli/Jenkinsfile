@@ -6,37 +6,33 @@ pipeline {
   stages {
     stage ('Install Dependencies') {
       steps {
-        sh """
-					cd exchange-cli
-					npm install
-				"""
+        dir ('exchange-cli') {
+					sh "npm install"
+        }
       }
     }
 
     stage ('Build') {
       steps {
-        sh """
-          cd exchange-cli
-          npm run build
-        """
+        dir ('exchange-cli') {
+          sh "npm run build"
+        }
       }
     }
 
     stage ('Unit Tests') {
       steps {
-        sh """
-          cd exchange-cli
-          npm run test:unit
-        """
+        dir ('exchange-cli') {
+          sh "npm run test:unit"
+        }
       }
     }
 
     stage ('Functional Tests') {
       steps {
-        sh """
-					cd exchange-cli
-          npm run test:functional
-        """
+        dir ('exchange-cli') {
+          sh "npm run test:functional"
+        }
       }
     }
   }
